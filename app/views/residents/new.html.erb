@@ -1,0 +1,60 @@
+<%= form_with( url: new_resident_path, method: "post") do |f| %>
+  <div class="resident_form">
+    <div class="input">
+      <label for="resident_full_name">
+        Nome Completo
+        <%= f.text_field :full_name %>
+      </label>
+    </div>
+
+    <div class="input">
+      <label for="resident_cpf">
+        CPF
+        <%= f.text_field :cpf %>
+      </label>
+    </div>
+
+    <div class="input">
+      <label for="resident_cns">
+        CNS
+        <%= f.text_field :cns %>
+      </label>
+    </div>
+
+    <div class="input">
+      <label for="resident_email">
+        Email
+        <%= f.text_field :email %>
+      </label>
+    </div>
+
+    <div class="input">
+      <label for="resident_birth_date">
+        Data de nascimento
+        <%= f.date_field :birth_date %>
+      </label>
+    </div>
+
+    <div class="input">
+      <label for="resident_phone_number">
+        Celular
+        <%= f.text_field :phone_number %>
+      </label>
+    </div>
+
+    <!--
+    <div class="address_form">
+      <%= f.fields_for :addresses do |addresses_form| %>
+      <% end %>
+
+    </div>
+    -->
+    <%= f.submit request.path.include?('new') ? "Criar Municipe" : "Editar Municipe" %>
+  </div>
+<% end %>
+
+<style>
+  .resident_form {
+    text-align: left;
+  }
+</style>

@@ -1,0 +1,10 @@
+<h1>Here</h1>
+<table>
+  <ul>
+    <% @residents.each do |resident| %>
+      <li> <%= resident.full_name %> - <%= resident.cpf %> </li>
+    <% end %>
+  </ul>
+</table>
+
+<%= link_to "Criar novo Municipe", new_resident_path %>
