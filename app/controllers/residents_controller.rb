@@ -15,6 +15,10 @@ class ResidentsController < ApplicationController
   def create
     @resident = Resident.new(register_params)
     redirect_to residents_path if @resident.save
+    puts "*" * 50
+    puts @resident.save
+    debugger
+    puts "*" * 50
   end
 
   def update; end

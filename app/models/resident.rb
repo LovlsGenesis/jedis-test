@@ -19,7 +19,7 @@ class Resident < ApplicationRecord
   end
 
   def cns_is_valid?
-    Cns.validate(cns)
+    return errors.add(:cns, 'CNS invalido') unless Cns.validate(cns)
   end
 
   def send_welcome

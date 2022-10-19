@@ -1,10 +1,55 @@
 <h1>Here</h1>
-<table>
-  <ul>
+<table id="residents">
+  <tr>
+    <th> Name </th>
+    <th> CPF </th>
+    <th> CNS </th>
+    <th> Telefone </th>
+    <th>Opções</th>
+  </tr>
     <% @residents.each do |resident| %>
-      <li> <%= resident.full_name %> - <%= resident.cpf %> </li>
+    <tr>
+      <td><%= resident.full_name %></td>
+      <td><%= "#{resident.cpf.first(3)}.***.***-#{resident.cpf.last(2)}"%></td>
+      <td><%= "#{resident.cns.first(3)}************"%></td>
+      <td><%= "(#{resident.phone_number.first(2)}) *****-#{resident.phone_number.last(4)}"%></td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Opções
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Editar", edit_resident_path(resident.id) %></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
     <% end %>
-  </ul>
 </table>
 
 <%= link_to "Criar novo Municipe", new_resident_path %>
+
+<style>
+  #residents {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 50px
+  }
+
+  #residents td, #residents th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #residents tr:nth-child(even){background-color: #f2f2f2;}
+
+  #residents tr:hover {background-color: #ddd;}
+
+  #residents th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+</style>
