@@ -9,6 +9,7 @@ class Resident < ApplicationRecord
   validate :cpf_is_valid?, :email_is_valid?, :cns_is_valid?, :birth_date_valid?
 
   after_create :send_welcome
+  after_update :send_welcome
 
   def cpf_is_valid?
     return errors.add(:cpf, 'CPF invalido') unless CPF.valid?(cpf)
@@ -32,9 +33,8 @@ class Resident < ApplicationRecord
 
   def send_welcome
     Thread.new do
-      ApplicationMailer.welcome(@resident).deliver
-      # Send SMS
+      ApplicationMailer.welcome(self).deliver_now
+      TwilioTextMessenger.new('Cadastro realizado com sucesso! Jedis Team', phone_number).call
     end
-
   end
 end

@@ -55,10 +55,4 @@ Lembre-se que o melhor de um profissional é sua atitude quanto a resolução de
 
 Coloque o código em seu repositório no github e vamos baixar e analisar internamente, após a anãlise, vamos te dar o feedback.
 
-Validar data de nascimentos year > year.now, older than 120yo
-Edição de Municipe
-Integrar parte de imagem
-Definir Status
-Enviar Email e SMS depois da criação
-Filtragem Municipes por dados / endereço
 Teste Unitarios

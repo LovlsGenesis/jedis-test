@@ -2,7 +2,16 @@ class ResidentsController < ApplicationController
   before_action :set_resident, only: %i[show edit update destroy switch_status]
 
   def index
-    @residents = Resident.all
+    if params[:search].present?
+      @residents = Resident.joins(:address).where(
+        'lower(addresses.city) LIKE ? OR lower(addresses.state) = ? OR residents.full_name LIKE ?',
+        "%#{params[:search]}%".downcase, params[:search].downcase, "%#{params[:search]}%"
+      ).includes(:address)
+    else
+      @residents = Resident.all
+      # @residents = V4municipio.where("`nome` LIKE ?", "%#{params[:nome]}%")
+    end
+
   end
 
   def show; end
