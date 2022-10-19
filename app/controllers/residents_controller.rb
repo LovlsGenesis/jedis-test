@@ -9,9 +9,7 @@ class ResidentsController < ApplicationController
       ).includes(:address)
     else
       @residents = Resident.includes(:address).all
-      # @residents = V4municipio.where("`nome` LIKE ?", "%#{params[:nome]}%")
     end
-
   end
 
   def show; end
