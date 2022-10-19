@@ -8,7 +8,7 @@ class ResidentsController < ApplicationController
         "%#{params[:search]}%".downcase, params[:search].downcase, "%#{params[:search]}%"
       ).includes(:address)
     else
-      @residents = Resident.all
+      @residents = Resident.includes(:address).all
       # @residents = V4municipio.where("`nome` LIKE ?", "%#{params[:nome]}%")
     end
 

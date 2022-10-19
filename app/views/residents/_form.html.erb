@@ -49,7 +49,9 @@
           Foto
         </label>
         <%= f.file_field :picture, id: "imgInp", value: @resident.picture %>
-        <%= image_tag(@resident.picture, style: "height:200px") %>
+        <% if @resident.picture.attached? %>
+          <%= image_tag(@resident.picture, style: "height:200px") %>
+        <% end %>
         <img id="preview" src="#" alt="your image" style="height: 200px" />
       </div>
     </div>
