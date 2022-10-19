@@ -1,60 +1,176 @@
-<%= form_with( url: new_resident_path, method: "post") do |f| %>
-  <div class="resident_form">
-    <div class="input">
-      <label for="resident_full_name">
-        Nome Completo
-        <%= f.text_field :full_name %>
-      </label>
+<%= form_for @resident do |f| %>
+  <div class="form">
+    <div class="resident_form">
+      <h3>Informações</h3>
+      <div class="input">
+        <label for="resident_full_name">
+          Nome Completo
+          <%= f.text_field :full_name, placeholder: "John Doe" %>
+        </label>
+      </div>
+
+      <div class="input">
+        <label for="resident_cpf">
+          CPF
+          <%= f.text_field :cpf, placeholder: "000.000.000-00" %>
+        </label>
+      </div>
+
+      <div class="input">
+        <label for="resident_cns">
+          CNS
+          <%= f.text_field :cns %>
+        </label>
+      </div>
+
+      <div class="input">
+        <label for="resident_email">
+          Email
+          <%= f.text_field :email, placeholder: "email@email.com" %>
+        </label>
+      </div>
+
+      <div class="input">
+        <label for="resident_birth_date">
+          Data de nascimento
+          <%= f.date_field :birth_date %>
+        </label>
+      </div>
+
+      <div class="input">
+        <label for="resident_phone_number">
+          Celular
+          <%= f.text_field :phone_number, placeholder: "99 99999-9999" %>
+        </label>
+      </div>
     </div>
 
-    <div class="input">
-      <label for="resident_cpf">
-        CPF
-        <%= f.text_field :cpf %>
-      </label>
-    </div>
-
-    <div class="input">
-      <label for="resident_cns">
-        CNS
-        <%= f.text_field :cns %>
-      </label>
-    </div>
-
-    <div class="input">
-      <label for="resident_email">
-        Email
-        <%= f.text_field :email %>
-      </label>
-    </div>
-
-    <div class="input">
-      <label for="resident_birth_date">
-        Data de nascimento
-        <%= f.date_field :birth_date %>
-      </label>
-    </div>
-
-    <div class="input">
-      <label for="resident_phone_number">
-        Celular
-        <%= f.text_field :phone_number %>
-      </label>
-    </div>
-
-    <!--
     <div class="address_form">
-      <%= f.fields_for :addresses do |addresses_form| %>
+      <h3>Endereço</h3>
+      <%= f.fields_for :address do |address_form| %>
+        <div class="input">
+          <label for="resident_address_attributes_cep">
+            CEP
+            <%= address_form.text_field :cep %>
+          </label>
+        </div>
+        <div class="input">
+          <label for="resident_address_attributes_street">
+            Rua
+            <%= address_form.text_field :street %>
+          </label>
+        </div>
+        <div class="input">
+          <label for="resident_address_attributes_neighborhood">
+            Bairro
+            <%= address_form.text_field :neighborhood %>
+          </label>
+        </div>
+        <div class="input">
+          <label for="resident_address_attributes_city">
+            Cidade
+            <%= address_form.text_field :city %>
+          </label>
+        </div>
+        <div class="input">
+          <label for="resident_address_attributes_state">
+            UF
+            <%= address_form.text_field :state %>
+          </label>
+        </div>
+        <div class="input">
+          <label for="resident_address_attributes_complement">
+            Complemento
+            <%= address_form.text_field :complement %>
+          </label>
+        </div>
       <% end %>
 
     </div>
-    -->
+  </div>
+  <div class="submit">
     <%= f.submit request.path.include?('new') ? "Criar Municipe" : "Editar Municipe" %>
   </div>
 <% end %>
 
 <style>
+  .form {
+    display: flex;
+    justify-content: center;
+  }
+
   .resident_form {
-    text-align: left;
+    margin-right: 50px
+  }
+  .address_form {
+    margin-left: 50px
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+  input[type=submit] {
+    width: 50%
+  }
+
+  .submit {
+    display: flex;
+    justify-content: center;
   }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function() {
+
+    function limpa_formulário_cep() {
+      $("input#resident_address_attributes_street").val("");
+      $("input#resident_address_attributes_neighborhood").val("");
+      $("input#resident_address_attributes_city").val("");
+      $("input#resident_address_attributes_state").val("");
+      // $("#ibge").val("");
+    }
+
+    $("input#resident_address_attributes_cep").blur(function() {
+      var cep = $(this).val().replace(/\D/g, '');
+      if (cep != "") {
+        var validacep = /^[0-9]{8}$/;
+        if(validacep.test(cep)) {
+          $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+          if (!("erro" in dados)) {
+            $("input#resident_address_attributes_street").val(dados.logradouro);
+            $("input#resident_address_attributes_neighborhood").val(dados.bairro);
+            $("input#resident_address_attributes_city").val(dados.localidade);
+            $("input#resident_address_attributes_state").val(dados.uf);
+
+            $("input#resident_address_attributes_street").attr('readonly', true);
+            $("input#resident_address_attributes_neighborhood").attr('readonly', true);
+            $("input#resident_address_attributes_city").attr('readonly', true);
+            $("input#resident_address_attributes_state").attr('readonly', true);
+            // $("#ibge").val(dados.ibge);
+          }
+          else {
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+          }});
+        }
+        else {
+          limpa_formulário_cep();
+          alert("Formato de CEP inválido.");
+        }
+      }
+      else {
+          limpa_formulário_cep();
+      }
+    });
+  });
+
+</script>

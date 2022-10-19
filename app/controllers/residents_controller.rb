@@ -5,29 +5,21 @@ class ResidentsController < ApplicationController
     @residents = Resident.all
   end
 
-  def show
-
-  end
+  def show; end
 
   def new
     @resident = Resident.new
+    @resident.build_address
   end
 
   def create
-    @resident = Resident.new(params[:resident])
+    @resident = Resident.new(register_params)
+    redirect_to residents_path if @resident.save
   end
 
-  def update
+  def update; end
 
-  end
-
-  def edit
-
-  end
-
-  def destroy
-
-  end
+  def edit; end
 
   private
 
@@ -37,6 +29,7 @@ class ResidentsController < ApplicationController
 
   def register_params
     params.require(:resident)
-          .permit(:full_name, :cpf, :cns, :email, :birth_date, :phone_number)
+          .permit(:full_name, :cpf, :cns, :email, :birth_date, :phone_number,
+                  address_attributes: %i[cep street neighborhood city state complement])
   end
 end
