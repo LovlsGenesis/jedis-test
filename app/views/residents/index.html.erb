@@ -1,6 +1,9 @@
 <h1>Lista de Municipes</h1>
 
-<input type="text">
+<%= form_with( url: residents_path ,method: :get , remote: true) do |f| %>
+  <%= f.text_field :search %>
+  <%= f.submit "Search" %>
+<% end %>
 
 <table id="residents">
   <tr>
