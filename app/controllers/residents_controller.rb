@@ -1,5 +1,5 @@
 class ResidentsController < ApplicationController
-  before_action :set_resident, only: %i[ show edit update destroy ]
+  before_action :set_resident, only: %i[show edit update destroy switch_status]
 
   def index
     @residents = Resident.all
@@ -31,6 +31,17 @@ class ResidentsController < ApplicationController
 
   def edit; end
 
+  def switch_status
+    @resident.active = !@resident.active
+    if @resident.save
+      flash[:success] = 'Status alterado com sucesso!'
+      redirect_to residents_path
+    else
+      flash[:error] = 'Não foi possivel alterar o status!'
+    end
+
+  end
+
   private
 
   def set_resident
@@ -39,7 +50,7 @@ class ResidentsController < ApplicationController
 
   def register_params
     params.require(:resident)
-          .permit(:full_name, :cpf, :cns, :email, :birth_date, :phone_number,
-                  address_attributes: %i[cep street neighborhood city state complement])
+          .permit(:full_name, :cpf, :cns, :email, :birth_date, :phone_number, :picture,
+                  address_attributes: %i[id cep street neighborhood city state complement])
   end
 end

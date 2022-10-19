@@ -6,7 +6,7 @@ class Resident < ApplicationRecord
   accepts_nested_attributes_for :address
 
   validates :full_name, :cpf, :cns, :email, :birth_date, :phone_number, presence: true
-  validate :cpf_is_valid?, :email_is_valid?, :cns_is_valid?
+  validate :cpf_is_valid?, :email_is_valid?, :cns_is_valid?, :birth_date_valid?
 
   after_create :send_welcome
 
@@ -20,6 +20,14 @@ class Resident < ApplicationRecord
 
   def cns_is_valid?
     return errors.add(:cns, 'CNS invalido') unless Cns.validate(cns)
+  end
+
+  def birth_date_valid?
+    date_time = birth_date.to_datetime
+    year = date_time.year
+    actual_year = DateTime.now.year
+
+    return errors.add(:birth_date, 'Data de nascimento invalida') if year > actual_year && (actual_year - year) > 120
   end
 
   def send_welcome
