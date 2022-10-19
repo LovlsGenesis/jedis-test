@@ -8,7 +8,7 @@ class ResidentsController < ApplicationController
   def show; end
 
   def new
-    @resident = Resident.new
+    @resident ||= Resident.new
     @resident.build_address
   end
 
