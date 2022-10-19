@@ -14,14 +14,20 @@ class ResidentsController < ApplicationController
 
   def create
     @resident = Resident.new(register_params)
-    redirect_to residents_path if @resident.save
-    puts "*" * 50
-    puts @resident.save
-    debugger
-    puts "*" * 50
+    if @resident.save
+      redirect_to residents_path
+    else
+      redirect_to action: :new
+    end
   end
 
-  def update; end
+  def update
+    if @resident.update(register_params)
+      redirect_to residents_path
+    else
+      redirect_to action: :edit
+    end
+  end
 
   def edit; end
 

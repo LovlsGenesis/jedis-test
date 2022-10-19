@@ -25,8 +25,8 @@ Ter uma entidade relacionada chamada Endereço. Essa entidade salva o endereço 
 2.3 Em termos de MVC, existe apenas a Entidade relacional endereço. O restante é dispensável;
 Regras de negócio:
 
-Após criar/atualizar um municipe, você deve mandar um Email e sms ao mesmo informando sobre o cadastro de suas informações e quando o seu status sofrer alteração;
-Filtrar municipes por dados dele e/ou de endereco. É livre a escolha do que deve ser feito.
+Após criar/atualizar um municipe, você deve mandar um Email e sms ao mesmo informando sobre o cadastro de suas informações e quando o seu status sofrer alteração; // TODO
+Filtrar municipes por dados dele e/ou de endereco. É livre a escolha do que deve ser feito. // TODO
 Dicas:
 
 UI/UX:
@@ -36,8 +36,8 @@ Você deve minimizar o máximo possível a navegação do usuário. Como você f
 Backend:
 
 Pense que essas regras podem ser mudadas com uma frequência alta;
-Gostamos de otimização, setups e deploys são sempre automatizados (Docker?)
-Não preciso dizer que você precisa testar a maioria dos arquivos, não é mesmo?
+Gostamos de otimização, setups e deploys são sempre automatizados (Docker?) // Done
+Não preciso dizer que você precisa testar a maioria dos arquivos, não é mesmo? // TODO
 Princípios e padrões de projetos são muito bem vindos e essenciais para Seniors;
 Reduzir o número de chamadas ao banco de dados é essencial.
 Tools:
@@ -54,3 +54,11 @@ Ver seu teste rodando em modo produção conta MUITO. Fica ao seu criterio se fa
 Lembre-se que o melhor de um profissional é sua atitude quanto a resolução de problemas. Interprete esse item como desejar ;)
 
 Coloque o código em seu repositório no github e vamos baixar e analisar internamente, após a anãlise, vamos te dar o feedback.
+
+Validar data de nascimentos year > year.now, older than 120yo
+Edição de Municipe
+Integrar parte de imagem
+Definir Status
+Enviar Email e SMS depois da criação
+Filtragem Municipes por dados / endereço
+Teste Unitarios

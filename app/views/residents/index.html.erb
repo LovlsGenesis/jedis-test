@@ -7,6 +7,7 @@
     <th> Telefone </th>
     <th> Cidade </th>
     <th> UF </th>
+    <th> Status </th>
     <th>Opções</th>
   </tr>
     <% @residents.each do |resident| %>
@@ -18,6 +19,7 @@
       <td><%= "(#{resident.phone_number.first(2)}) *****-#{resident.phone_number.last(4)}"%></td>
       <td> <%= address.city %> </td>
       <td> <%= address.state %> </td>
+      <td> <%= resident.active ? "Ativo" : "Inativo" %> </td>
       <td>
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Opções
