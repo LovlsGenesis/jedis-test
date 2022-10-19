@@ -91,9 +91,17 @@
   <div class="submit">
     <%= f.submit request.path.include?('new') ? "Criar Municipe" : "Editar Municipe" %>
   </div>
+  <%= link_to "Menu", residents_path, id: "menu" %>
 <% end %>
 
+
 <style>
+
+  #menu {
+    text-align: center;
+    margin: 0 auto
+  }
+
   .form {
     display: flex;
     justify-content: center;
@@ -117,9 +125,10 @@
     width: 50%
   }
 
-  .submit {
+  .submit, #menu {
     display: flex;
     justify-content: center;
+    text-decoration: none
   }
 </style>
 

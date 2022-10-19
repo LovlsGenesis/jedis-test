@@ -1,18 +1,23 @@
-<h1>Here</h1>
+<h1>Lista de Municipes</h1>
 <table id="residents">
   <tr>
     <th> Name </th>
     <th> CPF </th>
     <th> CNS </th>
     <th> Telefone </th>
+    <th> Cidade </th>
+    <th> UF </th>
     <th>Opções</th>
   </tr>
     <% @residents.each do |resident| %>
+    <% address = resident.address %>
     <tr>
       <td><%= resident.full_name %></td>
       <td><%= "#{resident.cpf.first(3)}.***.***-#{resident.cpf.last(2)}"%></td>
       <td><%= "#{resident.cns.first(3)}************"%></td>
       <td><%= "(#{resident.phone_number.first(2)}) *****-#{resident.phone_number.last(4)}"%></td>
+      <td> <%= address.city %> </td>
+      <td> <%= address.state %> </td>
       <td>
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Opções
